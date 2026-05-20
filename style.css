@@ -1,0 +1,123 @@
+body {
+    background-image: url('./assets/wave-haikei.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: auto;
+    flex-direction: column;
+}
+
+img {
+    width: 100%;
+    max-width: 250px;
+}
+
+#randomSelect {
+    font-family: Righteous;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.arena {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.battle-log {
+    flex: 1;
+    text-align: center;
+}
+
+.pokemon-card {
+    flex: 1;
+    padding: 1rem;
+    text-transform: capitalize;
+    font-family: Righteous;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+#pokemon2 {
+    text-align: right;
+}
+
+#pokemon2 .move-buttons {
+    align-items: flex-end;
+}
+
+.move-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+}
+
+.move-btn {
+    text-transform: capitalize;
+    width: fit-content;
+    font-family: Righteous;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+h1 {
+    font-family: Righteous;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+h3 {
+    font-family: Righteous;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 15.4px;
+}
+
+p {
+    font-family: Righteous;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+blockquote {
+    font-family: Righteous;
+    font-size: 21px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+pre {
+    font-family: Righteous;
+    font-size: 13px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 18.5667px;
+}
