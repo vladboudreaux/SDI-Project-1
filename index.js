@@ -66,7 +66,7 @@ function renderPokemon(pokemon, cardId) {
     <h2>${pokemon.name}</h2>
     <img src="${pokemon.image}" alt="${pokemon.name}" width="200"/>
     <p> Type: ${pokemon.types.join(', ')}</p>
-    <p> HP: ${pokemon.hp}</p>
+    <span class="pokemon-hp"> HP: ${pokemon.hp}</span>
     <p> Attack: ${pokemon.attack}</p>
     <p> Defense: ${pokemon.defense}</p>
     <p> Speed: ${pokemon.speed}</p>
