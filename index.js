@@ -13,6 +13,10 @@ function loadData() {
 
 loadData()
 
+function handleResponse(res) {
+    if (!res.ok) throw new Error(`Error: ${res.status}`)
+    return res.json()
+}
 
 function saveData(pokemon1, pokemon2) {
     localStorage.setItem('pokemon1', JSON.stringify(pokemon1))
@@ -26,9 +30,9 @@ async function parsePokemon(data) {
         .map(m => m.move.url)
 
     const moveData = await Promise.all(
-        moveUrls.map(url => fetch(url).then(res => res.json()))
+        moveUrls.map(url => fetch(url).then(handleResponse))
     )
-    console.log(moveData[0].flavor_text_entries)
+    // console.log(moveData[0].flavor_text_entries)
 
     const moves = moveData.map(m => ({
         name: m.name,
@@ -72,6 +76,17 @@ function renderPokemon(pokemon, cardId) {
     <p> Speed: ${pokemon.speed}</p>
     <div class="move-buttons"> ${moveButtons}</div>
     `
+    const cardBackgrounds = {
+        water: `./assets/water_background.jpg`,
+        fire: `./assets/fire_background.png`,
+        grass: `./assets/grass_background.jpg`,
+        dark: `./assets/dark_background.jpg`,
+    }
+
+    const type = pokemon.types[0]
+    const cBg = cardBackgrounds[type] || `./assets/forest_background.jpg`
+
+    card.querySelector('img').style.backgroundImage = `url(${cBg})`
 }
 
 randomSelect.addEventListener('click', async () => {

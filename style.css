@@ -14,7 +14,8 @@ body {
 img {
     width: 100%;
     max-width: 250px;
-    background-image: url('./assets/card_background.jpg')
+    background-image: url('./assets/grass_background.jpg');
+    border-style: solid;
 }
 
 #randomSelect {
