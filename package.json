@@ -1,0 +1,20 @@
+{
+  "name": "sdi-project-1",
+  "version": "1.0.0",
+  "description": "Pokemon Battler",
+  "homepage": "https://github.com/vladboudreaux/SDI-Project-1#readme",
+  "bugs": {
+    "url": "https://github.com/vladboudreaux/SDI-Project-1/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladboudreaux/SDI-Project-1.git"
+  },
+  "license": "ISC",
+  "author": "vinnyb",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
