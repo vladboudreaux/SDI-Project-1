@@ -1,13 +1,27 @@
 const randomSelect = document.getElementById('randomSelect')
 const url = 'https://pokeapi.co/api/v2/pokemon/'
 
+const battleLog = document.getElementById('battle-log')
+const arena = document.getElementById('arena')
+const logList = document.getElementById('log-list')
+
+let pokemon1 = null
+let pokemon2 = null
+let logEntries = []
+
 function loadData() {
-    const pokemon1 = JSON.parse(localStorage.getItem('pokemon1'))
-    const pokemon2 = JSON.parse(localStorage.getItem('pokemon2'))
+    pokemon1 = JSON.parse(localStorage.getItem('pokemon1'))
+    pokemon2 = JSON.parse(localStorage.getItem('pokemon2'))
+    logEntries = JSON.parse(localStorage.getItem('battleLog')) || []
 
     if (pokemon1 && pokemon2) {
         renderPokemon(pokemon1, 'pokemon1')
         renderPokemon(pokemon2, 'pokemon2')
+        for (let entry of logEntries) {
+            const li = document.createElement('li')
+            li.textContent = entry
+            logList.appendChild(li)
+        }
     }
 }
 
@@ -18,9 +32,10 @@ function handleResponse(res) {
     return res.json()
 }
 
-function saveData(pokemon1, pokemon2) {
+function saveData(pokemon1, pokemon2, logEntries) {
     localStorage.setItem('pokemon1', JSON.stringify(pokemon1))
     localStorage.setItem('pokemon2', JSON.stringify(pokemon2))
+    localStorage.setItem('battleLog', JSON.stringify(logEntries))
 }
 
 async function parsePokemon(data) {
@@ -70,7 +85,7 @@ function renderPokemon(pokemon, cardId) {
     <h2>${pokemon.name}</h2>
     <img src="${pokemon.image}" alt="${pokemon.name}" width="200"/>
     <p> Type: ${pokemon.types.join(', ')}</p>
-    <span class="pokemon-hp"> HP: ${pokemon.hp}</span>
+    <span class="pokemon-hp" id="hp-${cardId}"> HP: ${pokemon.hp}</span>
     <p> Attack: ${pokemon.attack}</p>
     <p> Defense: ${pokemon.defense}</p>
     <p> Speed: ${pokemon.speed}</p>
@@ -94,11 +109,11 @@ randomSelect.addEventListener('click', async () => {
     const id2 = Math.floor(Math.random() * 1025) + 1
 
     const [data1, data2] = await Promise.all([
-        fetch(`${url}${id1}`).then(res => res.json()),
-        fetch(`${url}${id2}`).then(res => res.json()),
-    ])
+        fetch(`${url}${id1}`).then(handleResponse),
+        fetch(`${url}${id2}`).then(handleResponse),
+    ]);
 
-    const [pokemon1, pokemon2] = await Promise.all([
+    [pokemon1, pokemon2] = await Promise.all([
         parsePokemon(data1),
         parsePokemon(data2),
     ])
@@ -106,6 +121,48 @@ randomSelect.addEventListener('click', async () => {
     renderPokemon(pokemon1, 'pokemon1')
     renderPokemon(pokemon2, 'pokemon2')
     saveData(pokemon1, pokemon2)
+    logEntries = []
+    logList.innerHTML = ''
+    localStorage.removeItem('battleLog')
 
     //console.log(pokemon1, pokemon2)
+})
+
+function calculateDamage(attacker, defender, movePower) {
+    if (movePower === 0) return 0
+    const randomness = 0.85 + Math.random() * 0.15
+    const damage = Math.floor(((attacker.attack * movePower) / (5 * defender.defense)) * randomness)
+    return Math.max(1, damage)
+}
+
+function doBattle(attacker, defender, move, defenderId) {
+    const damage = calculateDamage(attacker, defender, move.power)
+    const li = document.createElement('li')
+    li.textContent = `${attacker.name} uses ${move.name}. ${defender.name} takes ${damage} damage`
+    defender.hp = defender.hp - damage
+    document.getElementById(`hp-${defenderId}`).textContent = `HP: ${defender.hp}`
+    logList.appendChild(li)
+    logEntries.push(li.textContent)
+    if (defender.hp <= 0) {
+        document.getElementById(`hp-${defenderId}`).textContent = `HP: 0`
+        alert(`${attacker.name} wins!`)
+    }
+    saveData(pokemon1, pokemon2, logEntries)
+}
+
+arena.addEventListener('click', (e) => {
+    const card = e.target.closest('.pokemon-card')
+    const move = {
+        name: e.target.dataset.moveName,
+        power: parseInt(e.target.dataset.movePower)
+    }
+    if (e.target.classList.contains("move-btn") && card.id === 'pokemon1') {
+        doBattle(pokemon1, pokemon2, move, 'pokemon2')
+        const randomMove = pokemon2.moves[Math.floor(Math.random() * 4)]
+        setTimeout(() => {
+            if (pokemon2.hp > 0) {
+                doBattle(pokemon2, pokemon1, randomMove, 'pokemon1')
+            }
+        }, 1000)
+    }
 })
