@@ -92,14 +92,15 @@ function renderPokemon(pokemon, cardId) {
     <div class="move-buttons"> ${moveButtons}</div>
     `
     const cardBackgrounds = {
-        water: `./assets/water_background.jpg`,
-        fire: `./assets/fire_background.png`,
-        grass: `./assets/grass_background.jpg`,
-        dark: `./assets/dark_background.jpg`,
+        water: `../images/water_background.jpg`,
+        fire: `../images/fire_background_small.jpeg`,
+        grass: `../images/grass_background.jpg`,
+        dark: `../images/dark_background_small.jpeg`,
+        ice: `../images/ice_background.jpg`,
     }
 
     const type = pokemon.types[0]
-    const cBg = cardBackgrounds[type] || `./assets/forest_background.jpg`
+    const cBg = cardBackgrounds[type] || `../images/forest_background.jpg`
 
     card.querySelector('img').style.backgroundImage = `url(${cBg})`
 }
@@ -130,7 +131,8 @@ randomSelect.addEventListener('click', async () => {
 
 function calculateDamage(attacker, defender, movePower) {
     if (movePower === 0) return 0
-    const randomness = 0.85 + Math.random() * 0.15
+    const randomness = 0.7 + Math.random() * 0.05
+    console.log(`randomness: ${randomness}`)
     const damage = Math.floor(((attacker.attack * movePower) / (5 * defender.defense)) * randomness)
     return Math.max(1, damage)
 }
@@ -138,7 +140,7 @@ function calculateDamage(attacker, defender, movePower) {
 function doBattle(attacker, defender, move, defenderId) {
     const damage = calculateDamage(attacker, defender, move.power)
     const li = document.createElement('li')
-    li.textContent = `${attacker.name} uses ${move.name}. ${defender.name} takes ${damage} damage`
+    li.textContent = `${attacker.name} uses ${move.name}. ${defender.name} takes ${damage} damage!`
     defender.hp = defender.hp - damage
     document.getElementById(`hp-${defenderId}`).textContent = `HP: ${defender.hp}`
     logList.appendChild(li)
