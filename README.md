@@ -22,4 +22,6 @@ The application currently pulls in 2 Pokemon with their base stats and 4 randoml
 
 ##
 ### Some additional resources I might use
-https://codepen.io/simeydotme/pen/QWdBOwx - for pokeball animations
+https://codepen.io/simeydotme/pen/QWdBOwx - for pokeball animations. this was a pain
+
+https://www.w3schools.com/howto/howto_css_shake_image.asp - for shaking the card. this was a pain
