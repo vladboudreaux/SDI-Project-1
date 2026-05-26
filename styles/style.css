@@ -59,6 +59,10 @@ img {
     order: reverse;
 }
 
+#log-list li {
+    margin-bottom: 0.5rem;
+}
+
 .userGuide {
     font-family: Righteous;
     text-align: center;
