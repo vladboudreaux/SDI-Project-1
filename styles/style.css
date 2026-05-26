@@ -93,6 +93,10 @@ img {
     outline: 3px solid #b0b0b0;
 }
 
+.pokemon-card:hover {
+    outline-color: gold;
+}
+
 .pokemon-hp {
     position: absolute;
     top: 1rem;
