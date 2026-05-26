@@ -50,7 +50,9 @@ async function parsePokemon(data) {
     )
     // console.log(moveData[0].flavor_text_entries)
 
-    filteredMoves = moveData.filter(m => m.power !== null && m.power > 0).slice(0, 4)
+    filteredMoves = moveData
+        .filter(m => m.power !== null && m.power > 0)
+        .slice(0, 4)
 
     const moves = filteredMoves.map(m => ({
         name: m.name,
@@ -59,6 +61,7 @@ async function parsePokemon(data) {
         type: m.type.name,
         description: m.flavor_text_entries.find(e => e.language.name === 'en')?.flavor_text || 'no description available'
     }))
+    console.log(moves)
 
     return {
         name: data.name,
@@ -116,7 +119,7 @@ function renderPokemon(pokemon, cardId) {
 
 function calculateDamage(attacker, defender, movePower) {
     if (movePower === 0) return 0
-    const randomness = 0.5 + Math.random() * 0.5
+    const randomness = 0.25 + Math.random() * 0.75
     console.log(`randomness: ${randomness}`)
     const damage = Math.floor(((attacker.attack * movePower) / (5 * defender.defense)) * randomness)
     return Math.max(1, damage)
@@ -142,6 +145,10 @@ function doBattle(attacker, defender, move, defenderId) {
     if (defender.hp <= 0) {
         document.getElementById(`hp-${defenderId}`).textContent = `HP: 0`
         arena.removeEventListener('click', battleClick)
+        defenderCard.classList.remove('pokemon-enter')
+        void defenderCard.offsetWidth
+        defenderCard.querySelector('img').src = '../images/gravestone-.png'
+        defenderCard.classList.add('pokemon-enter')
         alert(`${attacker.name.toUpperCase()} WINS!`)
     }
     saveData(pokemon1, pokemon2, logEntries)
@@ -190,6 +197,7 @@ randomSelect.addEventListener('click', async () => {
 
     //console.log(pokemon1, pokemon2)
 })
+
 arena.addEventListener('click', battleClick)
 
 clearButton.addEventListener('click', () => {
