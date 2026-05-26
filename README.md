@@ -21,7 +21,8 @@ Players control the Pokemon that spawns on the left side of the screen. The "com
 [x] Create a static How to Play manual on another page. <br>
 [] Show Pokedex entries either on the card or while hovering over the cards image.<br>
 [x] Maybe figure out how to do some animations. <br>
-[] Do some more styling, I think I can clean this up some.
+[] Do some more styling, I think I can clean this up some. <br>
+[] Add a feedback form.
 
 
 ##
