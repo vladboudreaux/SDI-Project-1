@@ -21,7 +21,7 @@ function loadData() {
         for (let entry of logEntries) {
             const li = document.createElement('li')
             li.textContent = entry
-            logList.appendChild(li)
+            logList.prepend(li)
         }
     }
 }
@@ -146,16 +146,17 @@ function doBattle(attacker, defender, move, defenderId) {
     li.textContent = `${attacker.name} uses ${move.name}. ${defender.name} takes ${damage} damage!`
     defender.hp = defender.hp - damage
     document.getElementById(`hp-${defenderId}`).textContent = `HP: ${defender.hp}`
-    logList.appendChild(li)
+    logList.prepend(li)
     logEntries.push(li.textContent)
     if (defender.hp <= 0) {
         document.getElementById(`hp-${defenderId}`).textContent = `HP: 0`
+        arena.removeEventListener('click', battleClick)
         alert(`${attacker.name} wins!`)
     }
     saveData(pokemon1, pokemon2, logEntries)
 }
 
-arena.addEventListener('click', (e) => {
+function battleClick(e) {
     const card = e.target.closest('.pokemon-card')
     const move = {
         name: e.target.dataset.moveName,
@@ -170,7 +171,9 @@ arena.addEventListener('click', (e) => {
             }
         }, 1000)
     }
-})
+}
+
+arena.addEventListener('click', battleClick)
 
 clearButton.addEventListener('click', () => {
     localStorage.clear()
