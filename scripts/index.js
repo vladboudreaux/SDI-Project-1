@@ -94,6 +94,11 @@ function renderPokemon(pokemon, cardId) {
     <p> Speed: ${pokemon.speed}</p>
     <div class="move-buttons"> ${moveButtons}</div>
     `
+
+    card.classList.remove('pokemon-enter')
+    void card.offsetWidth
+    card.classList.add('pokemon-enter')
+
     const cardBackgrounds = {
         water: `../images/water_background.jpg`,
         fire: `../images/fire_background_small.jpeg`,
@@ -143,8 +148,13 @@ function calculateDamage(attacker, defender, movePower) {
 function doBattle(attacker, defender, move, defenderId) {
     const damage = calculateDamage(attacker, defender, move.power)
     const li = document.createElement('li')
+    const defenderCard = document.getElementById(defenderId)
     li.textContent = `${attacker.name} uses ${move.name}. ${defender.name} takes ${damage} damage!`
     defender.hp = defender.hp - damage
+    defenderCard.classList.add('damageShake')
+    defenderCard.addEventListener('animationend', () => {
+        defenderCard.classList.remove('damageShake')
+    }, { once: true })
     document.getElementById(`hp-${defenderId}`).textContent = `HP: ${defender.hp}`
     logList.prepend(li)
     logEntries.push(li.textContent)

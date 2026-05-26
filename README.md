@@ -17,4 +17,9 @@ The application currently pulls in 2 Pokemon with their base stats and 4 randoml
 [x] We got some base battle logic in! That was fun.<br>
 [x] Create a built in How to Play manual on another page. <br>
 [] Show Pokedex entries either on the card or while hovering over the cards image.<br>
-[] Maybe figure out how to do some animations.
+[x] Maybe figure out how to do some animations.
+
+
+##
+### Some additional resources I might use
+https://codepen.io/simeydotme/pen/QWdBOwx - for pokeball animations
