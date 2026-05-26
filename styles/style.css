@@ -10,7 +10,12 @@ body {
     margin-top: auto;
     flex-direction: column;
     margin: 0;
+}
 
+.pageHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 img {
@@ -18,10 +23,11 @@ img {
     max-width: 300px;
     background-image: url('../images/grass_background.jpg');
     border-style: solid;
-
 }
 
-#randomSelect {
+#randomSelect,
+#clearButton,
+#returnButton {
     font-family: Righteous;
     font-size: 14px;
     font-style: normal;
@@ -48,6 +54,14 @@ img {
     max-width: 400px;
     scrollbar-width: thin;
     scrollbar-color: olive orange;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+
+.userGuide {
+    font-family: Righteous;
+    text-align: center;
+    max-width: 600px;
     text-transform: capitalize;
     font-size: 14px;
 }

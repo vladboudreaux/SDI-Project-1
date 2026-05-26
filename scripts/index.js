@@ -4,6 +4,7 @@ const url = 'https://pokeapi.co/api/v2/pokemon/'
 const battleLog = document.getElementById('battle-log')
 const arena = document.getElementById('arena')
 const logList = document.getElementById('log-list')
+const clearButton = document.getElementById('clearButton')
 
 let pokemon1 = null
 let pokemon2 = null
@@ -41,7 +42,7 @@ function saveData(pokemon1, pokemon2, logEntries) {
 async function parsePokemon(data) {
     const moveUrls = data.moves
         .sort(() => Math.random() - 0.5)
-        .slice(0, 4)
+        .slice(0, 20)
         .map(m => m.move.url)
 
     const moveData = await Promise.all(
@@ -49,7 +50,9 @@ async function parsePokemon(data) {
     )
     // console.log(moveData[0].flavor_text_entries)
 
-    const moves = moveData.map(m => ({
+    filteredMoves = moveData.filter(m => m.power !== null && m.power > 0).slice(0, 4)
+
+    const moves = filteredMoves.map(m => ({
         name: m.name,
         power: m.power || 0,
         accuracy: m.accuracy || 100,
@@ -167,4 +170,9 @@ arena.addEventListener('click', (e) => {
             }
         }, 1000)
     }
+})
+
+clearButton.addEventListener('click', () => {
+    localStorage.clear()
+    window.location.reload()
 })
